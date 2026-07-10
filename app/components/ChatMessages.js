@@ -52,10 +52,10 @@ export default function ChatMessages({ messages, dept, loading }) {
             <div
               className="max-w-xl px-4 py-3 rounded-2xl text-sm leading-relaxed"
               style={{
-                backgroundColor: msg.role === "user" ? dept.color : "white",
-                color: msg.role === "user" ? "white" : "#1F2937",
-                boxShadow: "0 1px 3px rgba(0,0,0,0.08)"
-              }}
+  backgroundColor: msg.role === "user" ? dept.color : "#ffffff",
+  color: msg.role === "user" ? "#ffffff" : "#1F2937",
+  boxShadow: "0 1px 3px rgba(0,0,0,0.08)"
+}}
             >
               {msg.content}
             </div>
