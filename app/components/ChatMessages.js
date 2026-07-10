@@ -50,11 +50,16 @@ export default function ChatMessages({ messages, dept, loading }) {
           )}
           <div className="flex flex-col gap-1">
             <div
-  className={`max-w-xl px-4 py-3 rounded-2xl text-sm leading-relaxed ${msg.role === "user" ? "text-white" : "text-gray-800 bg-white"}`}
   style={{
-  backgroundColor: msg.role === "user" ? dept.color : "#f3f4f6",
-  boxShadow: "0 1px 3px rgba(0,0,0,0.08)"
-}}
+    backgroundColor: msg.role === "user" ? dept.color : "#f3f4f6",
+    color: msg.role === "user" ? "#ffffff" : "#111827",
+    boxShadow: "0 1px 3px rgba(0,0,0,0.08)",
+    maxWidth: "36rem",
+    padding: "0.75rem 1rem",
+    borderRadius: "1rem",
+    fontSize: "0.875rem",
+    lineHeight: "1.625"
+  }}
 >
   {msg.content}
 </div>
