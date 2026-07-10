@@ -19,8 +19,9 @@ export async function POST(request) {
       max_tokens: 1024,
     })
 
-    const reply = response.choices[0].message.content
-    return Response.json({ reply })
+   const reply = response.choices[0].message.content
+console.log("Reply content:", reply)
+return Response.json({ reply: reply || "No response received" })
   } catch (error) {
     console.error("API Error:", error.message)
     return Response.json({ error: error.message }, { status: 500 })
