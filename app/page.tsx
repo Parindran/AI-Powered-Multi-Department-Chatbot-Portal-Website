@@ -13,7 +13,6 @@ export default function Home() {
           </div>
           <div>
             <h1 className="text-xl font-bold text-gray-800">AI Chatbot Portal</h1>
-            <p className="text-xs text-gray-500">Powered by AI · 9 Departments</p>
           </div>
         </div>
       </div>
