@@ -1,14 +1,7 @@
 "use client"
 import { motion } from "framer-motion"
 
-import { useEffect, useRef } from "react"
-
 export default function ChatMessages({ messages, dept, loading }) {
-  const bottomRef = useRef(null)
-
-  useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" })
-  }, [messages, loading])
 
   function formatTime(timestamp) {
     if (!timestamp) return ""
@@ -16,78 +9,62 @@ export default function ChatMessages({ messages, dept, loading }) {
   }
 
   return (
-    <div className="flex-1 overflow-y-auto px-6 py-6 bg-gray-50">
+    <div style={{ flex: 1, overflowY: "auto", padding: "1.5rem", backgroundColor: "#f9fafb" }}>
 
-      {/* Empty state */}
       {messages.length === 0 && (
-        <div className="flex flex-col items-center justify-center h-full text-center">
-          <span className="text-6xl mb-4">{dept.icon}</span>
-          <h3 className="text-xl font-semibold text-gray-700 mb-2">
-            {dept.name} Assistant
-          </h3>
-          <p className="text-gray-400 text-sm">
-            Ask me anything about {dept.name.toLowerCase()}
-          </p>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "100%", textAlign: "center" }}>
+          <span style={{ fontSize: "3.75rem", marginBottom: "1rem" }}>{dept.icon}</span>
+          <h3 style={{ fontSize: "1.25rem", fontWeight: 600, color: "#374151", marginBottom: "0.5rem" }}>{dept.name} Assistant</h3>
+          <p style={{ color: "#9CA3AF", fontSize: "0.875rem" }}>Ask me anything about {dept.name.toLowerCase()}</p>
         </div>
       )}
 
-      {/* Messages */}
       {messages.map((msg, i) => (
-  <motion.div
-    key={i}
-    initial={{ opacity: 0, y: 10 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.3 }}
-    className={`flex mb-4 ${msg.role === "user" ? "justify-end" : "justify-start"}`}
-  >
+        <motion.div
+          key={i}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+          style={{ display: "flex", justifyContent: msg.role === "user" ? "flex-end" : "flex-start", marginBottom: "1rem" }}
+        >
           {msg.role === "assistant" && (
-            <div
-              className="w-8 h-8 rounded-full flex items-center justify-center text-sm mr-3 flex-shrink-0"
-              style={{ backgroundColor: dept.lightColor }}
-            >
+            <div style={{ width: "2rem", height: "2rem", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.875rem", marginRight: "0.75rem", flexShrink: 0, backgroundColor: dept.lightColor }}>
               {dept.icon}
             </div>
           )}
-          <div className="flex flex-col gap-1">
-            <div
-  style={{
-    backgroundColor: msg.role === "user" ? dept.color : "#f3f4f6",
-    color: msg.role === "user" ? "#ffffff" : "#111827",
-    boxShadow: "0 1px 3px rgba(0,0,0,0.08)",
-    maxWidth: "36rem",
-    padding: "0.75rem 1rem",
-    borderRadius: "1rem",
-    fontSize: "0.875rem",
-    lineHeight: "1.625"
-  }}
->
-  {msg.content}
-</div>
-            <p className={`text-xs text-gray-400 ${msg.role === "user" ? "text-right" : "text-left"}`}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.25rem" }}>
+            <div style={{
+              backgroundColor: msg.role === "user" ? dept.color : "#e5e7eb",
+              color: msg.role === "user" ? "#ffffff" : "#111827",
+              maxWidth: "36rem",
+              padding: "0.75rem 1rem",
+              borderRadius: "1rem",
+              fontSize: "0.875rem",
+              lineHeight: "1.625",
+              wordBreak: "break-word"
+            }}>
+              {msg.content}
+            </div>
+            <p style={{ fontSize: "0.75rem", color: "#9CA3AF", textAlign: msg.role === "user" ? "right" : "left", margin: 0 }}>
               {formatTime(msg.timestamp)}
             </p>
           </div>
         </motion.div>
       ))}
 
-      {/* Loading indicator */}
       {loading && (
-        <div className="flex mb-4 justify-start">
-          <div
-            className="w-8 h-8 rounded-full flex items-center justify-center text-sm mr-3"
-            style={{ backgroundColor: dept.lightColor }}
-          >
+        <div style={{ display: "flex", marginBottom: "1rem" }}>
+          <div style={{ width: "2rem", height: "2rem", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.875rem", marginRight: "0.75rem", backgroundColor: dept.lightColor }}>
             {dept.icon}
           </div>
-          <div className="px-4 py-3 rounded-2xl bg-white shadow-sm flex items-center gap-1">
-            <span className="w-2 h-2 rounded-full animate-bounce bg-gray-400" style={{ animationDelay: "0ms" }}></span>
-            <span className="w-2 h-2 rounded-full animate-bounce bg-gray-400" style={{ animationDelay: "150ms" }}></span>
-            <span className="w-2 h-2 rounded-full animate-bounce bg-gray-400" style={{ animationDelay: "300ms" }}></span>
+          <div style={{ padding: "0.75rem 1rem", borderRadius: "1rem", backgroundColor: "white", boxShadow: "0 1px 3px rgba(0,0,0,0.08)", display: "flex", alignItems: "center", gap: "0.25rem" }}>
+            <span style={{ width: "0.5rem", height: "0.5rem", borderRadius: "50%", backgroundColor: "#9CA3AF", display: "inline-block" }}></span>
+            <span style={{ width: "0.5rem", height: "0.5rem", borderRadius: "50%", backgroundColor: "#9CA3AF", display: "inline-block" }}></span>
+            <span style={{ width: "0.5rem", height: "0.5rem", borderRadius: "50%", backgroundColor: "#9CA3AF", display: "inline-block" }}></span>
           </div>
         </div>
       )}
 
-      <div ref={bottomRef} />
     </div>
   )
 }
